@@ -40,8 +40,7 @@ import static org.mockito.Mockito.*;
 //@ExtendWith(MockitoExtension.class)
 //@RunWith(MockitoJUnitRunner.class)
 @RunWith(SpringJUnit4ClassRunner.class)
-@AutoConfigureMockMvc
-@SpringBootTest(classes = ProjectApplicationTests.class)
+@SpringBootTest
 @Transactional
 public class EmployeeServiceTest {
 
