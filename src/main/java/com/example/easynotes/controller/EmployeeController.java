@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 //import javax.validation.Valid;
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api")
 public class EmployeeController {
@@ -26,10 +27,15 @@ public class EmployeeController {
     }
 
 
-
     // Create a new Employee
     @RequestMapping (value="/employees", method=RequestMethod.POST)
     public ResponseEntity<Object> createEmployee(@RequestBody Employee employee) {
+        List<Employee> employees = employeeService.getAllEmployees();
+        for(int i = 0; i < employees.size(); i++){
+            if((employees.get(i).getName()).equals(employee.getName())){
+             return new ResponseEntity<>("Employee is a duplicate", HttpStatus.OK);
+            }
+        }
         employeeService.createEmployee(employee);
         return new ResponseEntity<>("Employee is created successfully", HttpStatus.CREATED);
     }
@@ -42,8 +48,7 @@ public class EmployeeController {
 
     // Update an Employee
     @RequestMapping(value = "/employees/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Object>
-    updateEmployee(@PathVariable("id") Integer id, @RequestBody Employee employee) {
+    public ResponseEntity<Object> updateEmployee(@PathVariable("id") int id, @RequestBody Employee employee) {
 
         employeeService.updateEmployee(id, employee);
         return new ResponseEntity<>("Employee is updated successfully", HttpStatus.OK);
@@ -52,7 +57,7 @@ public class EmployeeController {
 
     // Delete an employee
     @RequestMapping(value = "/employees/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> delete(@PathVariable("id") Integer id) {
+    public ResponseEntity<Object> delete(@PathVariable("id") int id) {
         employeeService.deleteEmployee(id);
         return new ResponseEntity<>("Employee is deleted successsfully", HttpStatus.OK);
     }

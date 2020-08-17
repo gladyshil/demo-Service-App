@@ -1,8 +1,10 @@
 package com.example.easynotes.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.example.easynotes.exception.ResourceNotFoundException;
+import com.example.easynotes.model.Department;
 import com.example.easynotes.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+        List<Employee> employees = employeeRepository.findAll();
+        return employees;
     }
     public boolean duplicateEmployee(List<Employee> employees, Employee employee){
         for(int i = 0; i < employees.size(); i++){
@@ -29,18 +32,29 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee createEmployee(Employee employee) {
+    public Employee createEmployee(Employee employee) { return employeeRepository.save(employee); }
+
+    /*@Override
+    public Employee createEmployee(Employee employee){
+        List<Employee> employees = employeeRepository.findAll();
+        Employee removed;
+        for(int i = 0; i < employees.size(); i++){
+            if(employees.get(i).equals(employee)){
+                removed = employees.get(i);
+                employees.remove(removed);
+            }
+        }
         return employeeRepository.save(employee);
-    }
+    }*/
 
     @Override
-    public Employee getEmployeeById(Integer employeeId) {
+    public Employee getEmployeeById(int employeeId) {
         return employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", employeeId));
     }
 
     @Override
-    public Employee updateEmployee(Integer employeeId, Employee employeeDetails) {
+    public Employee updateEmployee(int employeeId, Employee employeeDetails) {
 
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", employeeId));
@@ -55,7 +69,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public ResponseEntity<?> deleteEmployee(Integer employeeId) {
+    public ResponseEntity<?> deleteEmployee(int employeeId) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", employeeId));
 

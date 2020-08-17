@@ -1,6 +1,8 @@
 package com.example.easynotes.model;
 
+import com.example.easynotes.Generator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -9,17 +11,24 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 
 @Entity
-@Table(name = "employee")
+@Table(name = "employees")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"},
         allowGetters = true)
 public class Employee implements Serializable {
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(generator = Generator.generatorName)
+    @GenericGenerator(name = Generator.generatorName, strategy = "com.example.easynotes.Generator")
+    private int id;
 
     // @NotBlank
     private String first_name;
@@ -43,11 +52,12 @@ public class Employee implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 
-    public Integer getId() {
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

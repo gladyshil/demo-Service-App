@@ -39,7 +39,7 @@ public class DepartmentController {
     // Update an Employee
     @RequestMapping(value = "/departments/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Object>
-    updateEmployee(@PathVariable("id") Long id, @RequestBody Department department) {
+    updateEmployee(@PathVariable("id") int id, @RequestBody Department department) {
 
         departmentService.updateDepartment(id, department);
         return new ResponseEntity<>("Employee is updated successfully", HttpStatus.OK);
@@ -48,7 +48,7 @@ public class DepartmentController {
 
     // Delete an employee
     @RequestMapping(value = "/departments/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Object> delete(@PathVariable("id") int id) {
         departmentService.deleteDepartment(id);
         return new ResponseEntity<>("Employee is deleted successfully", HttpStatus.OK);
     }

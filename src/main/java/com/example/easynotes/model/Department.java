@@ -16,8 +16,8 @@ import java.util.Date;
         allowGetters = true)
 public class Department implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     // @NotBlank
     private String departmentName;
@@ -36,11 +36,11 @@ public class Department implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -31,13 +31,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department getDepartmentById(Long departmentId) {
+    public Department getDepartmentById(int departmentId) {
         return departmentRepository.findById(departmentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", departmentId));
     }
 
     @Override
-    public Department updateDepartment(Long departmentId, Department departmentDetails) {
+    public Department updateDepartment(int departmentId, Department departmentDetails) {
         Department department = departmentRepository.findById(departmentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", departmentId));
 
@@ -50,7 +50,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public ResponseEntity<?> deleteDepartment(Long departmentId) {
+    public ResponseEntity<?> deleteDepartment(int departmentId) {
         Department department = departmentRepository.findById(departmentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", departmentId));
 
